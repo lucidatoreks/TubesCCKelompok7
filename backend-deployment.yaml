@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+
+  name: backend-deployment
+
+spec:
+
+  replicas: 2
+
+  selector:
+
+    matchLabels:
+
+      app: backend
+
+  template:
+
+    metadata:
+
+      labels:
+
+        app: backend
+
+    spec:
+
+      containers:
+
+      - name: backend
+
+        image: backend-image:latest
+
+        imagePullPolicy: IfNotPresent
+
+        ports:
+
+        - containerPort: 5000
+
+        resources:
+
+          limits:
+
+            cpu: "500m"
+
+            memory: "512Mi"
+
+          requests:
+
+            cpu: "200m"
+
+            memory: "256Mi"
+
+        livenessProbe:
+
+          httpGet:
+
+            path: /  # Changed from /metrics to /
+
+            port: 5000
+
+          initialDelaySeconds: 15  # Increased delay
+
+          periodSeconds: 10
+
+        readinessProbe:
+
+          httpGet:
+
+            path: /  # Changed from /metrics to /
+
+            port: 5000
+
+          initialDelaySeconds: 15  # Increased delay
+
+          periodSeconds: 10

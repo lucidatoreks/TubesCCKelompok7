@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Room Page</title>
+</head>
+<body>
+    <h1>Welcome to Room Page</h1>
+    <p>This is frontend 2</p>
+
+    <div id="chat-box"></div>
+    <a href="/home">Go to Home Page</a>
+
+    <script>
+
+      function displayMessages() {
+          let messages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
+          let chatBox = document.getElementById('chat-box');
+          chatBox.innerHTML = ''; 
+          messages.forEach(function (message) {
+              let messageDiv = document.createElement('div');
+              messageDiv.textContent = message.from + ": " + message.text;
+              chatBox.appendChild(messageDiv);
+          });
+      }
+
+
+      window.onload = function() {
+          displayMessages();
+      };
+    </script>
+</body>
+</html>

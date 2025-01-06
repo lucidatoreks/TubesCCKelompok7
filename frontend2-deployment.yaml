@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend2-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend2
+  template:
+    metadata:
+      labels:
+        app: frontend2
+    spec:
+      containers:
+      - name: frontend2
+        image: frontend2-image:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: html-content
+          mountPath: /usr/share/nginx/html/index.html
+          subPath: index.html
+      volumes:
+      - name: html-content
+        configMap:
+          name: frontend2-config
+---
